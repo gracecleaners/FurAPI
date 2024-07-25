@@ -1,10 +1,10 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import ScoreViewSet
-
-router = DefaultRouter()
-router.register(r'scores', ScoreViewSet)
+from django.urls import path
+from .views import ScoreList, get_top_scores, get_scores_above_threshold, get_scores_below_threshold, get_scores_in_range
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('scores/', ScoreList.as_view(), name='score-list'),
+    path('scores/top/<int:top_n>/', get_top_scores, name='top-scores'),
+    path('scores/above/<float:threshold>/', get_scores_above_threshold, name='scores-above-threshold'),
+    path('scores/below/<float:threshold>/', get_scores_below_threshold, name='scores-below-threshold'),
+    path('scores/range_of_players/<int:start>/<int:end>/', get_scores_in_range, name='scores-in-range'),
 ]
