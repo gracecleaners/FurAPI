@@ -6,5 +6,5 @@ urlpatterns = [
     path('scores/top/<int:top_n>/', get_top_scores, name='top-scores'),
     path('scores/above/<float:threshold>/', get_scores_above_threshold, name='scores-above-threshold'),
     path('scores/below/<float:threshold>/', get_scores_below_threshold, name='scores-below-threshold'),
-    path('scores/range_of_players/<int:start>/<int:end>/', get_scores_in_range, name='scores-in-range'),
+    path('scores/range_of_players_descending_order/<int:start>/<int:end>/', get_scores_in_range, name='scores-in-range'),
 ]
