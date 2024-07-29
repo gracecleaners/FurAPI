@@ -28,11 +28,16 @@ def get_top_scores(request, top_n):
     serializer = ScoreSerializer(top_scores, many=True)
     return Response(serializer.data)
 
-@api_view(['GET'])
-def get_scores_above_threshold(request, threshold):
-    scores = Score.objects.filter(survive_seconds__gt=threshold).order_by('-survive_seconds')
-    serializer = ScoreSerializer(scores, many=True)
-    return Response(serializer.data)
+class ScoresAboveThresholdView(APIView):
+    def get(self, request, threshold):
+        try:
+            threshold = float(threshold)
+        except ValueError:
+            return Response({"error": "Invalid threshold value"}, status=status.HTTP_400_BAD_REQUEST)
+
+        scores = Score.objects.filter(survive_seconds__gt=threshold).order_by('-survive_seconds')
+        serializer = ScoreSerializer(scores, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
